@@ -22,6 +22,11 @@ class Document extends Model
         'validity_end',
         'tags',
         'note',
+        'people',
+    ];
+
+    protected $casts = [
+        'tags' => 'array'
     ];
 
     public function documentType(): BelongsTo

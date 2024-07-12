@@ -69,4 +69,9 @@ class DocumentTypeResource extends Resource
             'index' => Pages\ManageDocumentTypes::route('/'),
         ];
     }
+
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
+    }
 }

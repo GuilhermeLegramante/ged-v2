@@ -81,4 +81,9 @@ class PersonResource extends Resource
             'index' => Pages\ManagePeople::route('/'),
         ];
     }
+
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
+    }
 }

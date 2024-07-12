@@ -71,7 +71,7 @@ class DocumentResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: false),
                 FileLink::make('path')
                     ->label('Arquivo')
-                    ->alignment(Alignment::Center)
+                    // ->alignment(Alignment::Center)
                     ->toggleable(isToggledHiddenByDefault: false),
                 TextColumn::make('validity_start')
                     ->label('Início da Vigência')
@@ -116,5 +116,10 @@ class DocumentResource extends Resource
             'create' => Pages\CreateDocument::route('/create'),
             'edit' => Pages\EditDocument::route('/{record}/edit'),
         ];
+    }
+
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
     }
 }
