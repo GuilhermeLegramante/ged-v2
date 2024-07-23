@@ -35,6 +35,7 @@ class DocumentForm
                         ->label('Arquivo')
                         ->previewable()
                         ->downloadable()
+                        ->acceptedFileTypes(['image/*', 'application/pdf'])
                         ->disk('s3')
                         ->columnSpanFull()
                         ->directory('ged'),
