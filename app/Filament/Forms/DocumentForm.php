@@ -34,6 +34,7 @@ class DocumentForm
                     FileUpload::make('path')
                         ->label('Arquivo')
                         ->previewable()
+                        ->downloadable()
                         ->disk('s3')
                         ->columnSpanFull()
                         ->directory('ged'),
