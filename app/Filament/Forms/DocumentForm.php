@@ -33,6 +33,7 @@ class DocumentForm
                         ->maxLength(255),
                     FileUpload::make('path')
                         ->label('Arquivo')
+                        ->previewable()
                         ->disk('s3')
                         ->columnSpanFull()
                         ->directory('ged'),
