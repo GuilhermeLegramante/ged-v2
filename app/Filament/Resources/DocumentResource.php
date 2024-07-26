@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\Forms\Components\FileUploadWithPreview;
 use App\Filament\Forms\DocumentForm;
 use App\Filament\Forms\GeneralFields;
 use App\Filament\Resources\DocumentResource\Pages;
@@ -26,6 +27,7 @@ use Filament\Tables\Enums\ActionsPosition;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Storage;
 
 class DocumentResource extends Resource
 {
@@ -45,6 +47,29 @@ class DocumentResource extends Resource
     {
         return $form
             ->schema(DocumentForm::form());
+
+        // return $form
+        //     ->schema([
+        //         Forms\Components\Section::make('Upload Document')
+        //             ->schema([
+        //                FileUpload::make('document')
+        //                     ->label('Upload Document (PDF or Image)')
+        //                     ->acceptedFileTypes(['application/pdf', 'image/*'])
+        //                     ->required()
+        //                     ->reactive()
+        //                     ->afterStateUpdated(fn ($state, $get, $set) => $set('document_preview', url('/storage/tmp/' . $state->getFilename())))
+        //                     ->columnSpanFull(),
+        //                 Forms\Components\Section::make('Document Preview')
+        //                     ->schema([
+        //                         Forms\Components\ViewField::make('document_preview')
+        //                             ->view('components.document-preview')
+        //                             ->columnSpanFull(),
+        //                     ])
+        //                     ->columnSpanFull(),
+        //             ])
+        //             ->columnSpanFull(),
+        //     ])
+        //     ->columns(1);
     }
 
     public static function table(Table $table): Table
