@@ -8,6 +8,7 @@ use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TagsInput;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\ViewField;
 
 class DocumentForm
 {
@@ -19,6 +20,22 @@ class DocumentForm
                     fn (string $operation): string => $operation === 'create' || $operation === 'edit' ? 'Informe os campos solicitados' : ''
                 )
                 ->schema([
+                    FileUpload::make('path')
+                        ->label('Arquivo')
+                        ->previewable()
+                        ->downloadable()
+                        ->acceptedFileTypes(['image/*', 'application/pdf'])
+                        ->disk('s3')
+                        ->columnSpanFull()
+                        ->afterStateUpdated(fn ($state, $get, $set) => $set('document_preview', url('/storage/tmp/' . $state->getFilename())))
+                        ->directory('ged'),
+                    Section::make('Pré-visualização do Arquivo')
+                        ->schema([
+                            ViewField::make('document_preview')
+                                ->view('components.document-preview')
+                                ->columnSpanFull(),
+                        ])
+                        ->columnSpanFull(),
                     Select::make('document_type_id')
                         ->label('Tipo de Documento')
                         ->relationship('documentType', 'name')
@@ -31,14 +48,7 @@ class DocumentForm
                     TextInput::make('filename')
                         ->label('Nome do Documento')
                         ->maxLength(255),
-                    FileUpload::make('path')
-                        ->label('Arquivo')
-                        ->previewable()
-                        ->downloadable()
-                        ->acceptedFileTypes(['image/*', 'application/pdf'])
-                        ->disk('s3')
-                        ->columnSpanFull()
-                        ->directory('ged'),
+
                     DatePicker::make('validity_start')
                         ->label('Início da Vigência'),
                     DatePicker::make('validity_end')
