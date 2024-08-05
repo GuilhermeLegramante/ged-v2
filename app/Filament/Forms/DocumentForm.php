@@ -29,13 +29,13 @@ class DocumentForm
                         ->columnSpanFull()
                         ->afterStateUpdated(fn ($state, $get, $set) => $set('document_preview', url('/storage/tmp/' . $state->getFilename())))
                         ->directory('ged'),
-                    // Section::make('Pré-visualização do Arquivo')
-                    //     ->schema([
-                    //         ViewField::make('document_preview')
-                    //             ->view('components.document-preview')
-                    //             ->columnSpanFull(),
-                    //     ])
-                    //     ->columnSpanFull(),
+                    Section::make('Pré-visualização do Arquivo')
+                        ->schema([
+                            ViewField::make('document_preview')
+                                ->view('components.document-preview')
+                                ->columnSpanFull(),
+                        ])
+                        ->columnSpanFull(),
                     Select::make('document_type_id')
                         ->label('Tipo de Documento')
                         ->relationship('documentType', 'name')
