@@ -27,7 +27,7 @@ class DocumentForm
                         ->acceptedFileTypes(['image/*', 'application/pdf'])
                         ->disk('s3')
                         ->columnSpanFull()
-                        ->afterStateUpdated(fn ($state, $get, $set) => $set('document_preview', url('/storage/tmp/' . $state->getFilename())))
+                        ->afterStateUpdated(fn ($state, $get, $set) => $set('document_preview', url('/storage/files/' . $state->getFilename())))
                         ->directory('ged'),
                     Section::make('Pré-visualização do Arquivo')
                         ->schema([
