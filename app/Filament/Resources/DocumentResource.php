@@ -52,6 +52,7 @@ class DocumentResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->defaultSort('id', 'desc')
             ->columns([
                 TextColumn::make('documentType.name')
                     ->label('Tipo de Documento')
