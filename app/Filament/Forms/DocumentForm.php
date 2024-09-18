@@ -25,10 +25,10 @@ class DocumentForm
                         ->previewable()
                         ->downloadable()
                         ->acceptedFileTypes(['image/*', 'application/pdf'])
-                        ->disk('s3')
+                        // ->disk('s3')
                         ->columnSpanFull()
-                        ->afterStateUpdated(fn ($state, $get, $set) => $set('document_preview', url('/storage//' . $state->getFilename())))
-                        ->directory('ged'),
+                        ->afterStateUpdated(fn ($state, $get, $set) => $set('document_preview', url('/storage//' . $state->getFilename()))),
+                        // ->directory('ged-v2'),
                     Section::make('Pré-visualização do Arquivo')
                         ->schema([
                             ViewField::make('document_preview')
