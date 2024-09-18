@@ -17,7 +17,7 @@ class DocumentForm
         return [
             Section::make('Dados do Documento')
                 ->description(
-                    fn (string $operation): string => $operation === 'create' || $operation === 'edit' ? 'Informe os campos solicitados' : ''
+                    fn(string $operation): string => $operation === 'create' || $operation === 'edit' ? 'Informe os campos solicitados' : ''
                 )
                 ->schema([
                     FileUpload::make('path')
@@ -25,10 +25,17 @@ class DocumentForm
                         ->previewable()
                         ->downloadable()
                         ->acceptedFileTypes(['image/*', 'application/pdf'])
-                        // ->disk('s3')
+                        ->disk('public')  
+                        ->preserveFilenames()  
+                        ->directory('uploads-ged-v2')
+                        ->afterStateUpdated(function ($state, $set, $get, $model) {
+                            if ($state) {
+                                $state->store('uploads-ged-v2', 's3');
+                            }
+                        })
                         ->columnSpanFull()
-                        ->afterStateUpdated(fn ($state, $get, $set) => $set('document_preview', url('/storage//' . $state->getFilename()))),
-                        // ->directory('ged-v2'),
+                        ->afterStateUpdated(fn($state, $get, $set) => $set('document_preview', url('/storage//' . $state->getFilename()))),
+                    // ->directory('ged-v2'),
                     Section::make('Pré-visualização do Arquivo')
                         ->schema([
                             ViewField::make('document_preview')
