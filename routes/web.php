@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Livewire;
 
 Livewire::setScriptRoute(function ($handle) {
@@ -22,4 +23,8 @@ Route::get('/login', function () {
 
 Route::get('/', function () {
     return redirect(route('filament.admin.pages.dashboard'));
+});
+
+Route::get('/teste-upload', function (){
+    Storage::disk('s3')->put('uploads-ged-v2/test.txt', 'Conteúdo de teste');
 });

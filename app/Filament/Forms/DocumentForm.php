@@ -35,7 +35,6 @@ class DocumentForm
                         })
                         ->columnSpanFull()
                         ->afterStateUpdated(fn($state, $get, $set) => $set('document_preview', url('/storage//' . $state->getFilename()))),
-                    // ->directory('ged-v2'),
                     Section::make('Pré-visualização do Arquivo')
                         ->schema([
                             ViewField::make('document_preview')
