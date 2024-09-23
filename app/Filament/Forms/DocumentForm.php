@@ -9,6 +9,7 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TagsInput;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\ViewField;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
 class DocumentForm
@@ -26,8 +27,8 @@ class DocumentForm
                         ->previewable()
                         ->downloadable()
                         ->acceptedFileTypes(['image/*', 'application/pdf'])
-                        ->disk('public')  
-                        ->preserveFilenames()  
+                        ->disk('public')
+                        ->preserveFilenames()
                         ->directory('uploads-ged-v2')
                         // ->afterStateUpdated(function ($state, $set, $get, $model) {
                         //     if ($state) {
@@ -38,14 +39,24 @@ class DocumentForm
                             if ($state) {
                                 // Caminho do arquivo no disco local
                                 $localFilePath = 'uploads-ged-v2/' . $state->getFilename();
-                                
-                                // Copiar o arquivo para o S3
-                                $s3Path = 'uploads-ged-v2/' . $state->getFilename();
+
                                 if (Storage::disk('public')->exists($localFilePath)) {
-                                    // Copia para o S3
-                                    Storage::disk('s3')->put($s3Path, Storage::disk('public')->get($localFilePath));
+                                    // Tenta copiar para o S3
+                                    try {
+                                        $s3Path = 'uploads-ged-v2/' . $state->getFilename();
+                                        Storage::disk('s3')->put($s3Path, Storage::disk('public')->get($localFilePath));
+
+                                        // Opcional: Log para verificar se salvou corretamente no S3
+                                        Log::info("Arquivo {$s3Path} salvo com sucesso no S3.");
+                                    } catch (\Exception $e) {
+                                        // Log de erro caso a cópia falhe
+                                        Log::error("Erro ao salvar arquivo no S3: " . $e->getMessage());
+                                    }
+                                } else {
+                                    // Log de erro caso o arquivo não exista no disco local
+                                    Log::error("Arquivo não encontrado no disco local: {$localFilePath}");
                                 }
-                                
+
                                 // Atualiza a pré-visualização com o caminho no local
                                 $set('document_preview', Storage::disk('public')->url($localFilePath));
                             }
