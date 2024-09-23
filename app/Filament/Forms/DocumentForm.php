@@ -38,9 +38,7 @@ class DocumentForm
                         ->afterStateUpdated(function ($state, $set, $get, $model) {
                             if ($state) {
                                 // Caminho do arquivo no disco local
-                                $localFilePath = 'uploads-ged-v2/' . $state->getFilename();
-
-                                dd($localFilePath);
+                                $localFilePath = $state->getFilename();
 
                                 if (Storage::disk('public')->exists($localFilePath)) {
                                     // Tenta copiar para o S3
