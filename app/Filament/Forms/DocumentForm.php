@@ -40,6 +40,8 @@ class DocumentForm
                                 // Caminho do arquivo no disco local
                                 $localFilePath = 'uploads-ged-v2/' . $state->getFilename();
 
+                                dd($localFilePath);
+
                                 if (Storage::disk('public')->exists($localFilePath)) {
                                     // Tenta copiar para o S3
                                     try {
@@ -61,8 +63,8 @@ class DocumentForm
                                 $set('document_preview', Storage::disk('public')->url($localFilePath));
                             }
                         })
-                        ->columnSpanFull(),
-                        // ->afterStateUpdated(fn($state, $get, $set) => $set('document_preview', url('/storage//' . $state->getFilename()))),
+                        ->columnSpanFull()
+                        ->afterStateUpdated(fn($state, $get, $set) => $set('document_preview', url('/storage//' . $state->getFilename()))),
                     Section::make('Pré-visualização do Arquivo')
                         ->schema([
                             ViewField::make('document_preview')
