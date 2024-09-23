@@ -61,8 +61,8 @@ class DocumentForm
                                 $set('document_preview', Storage::disk('public')->url($localFilePath));
                             }
                         })
-                        ->columnSpanFull()
-                        ->afterStateUpdated(fn($state, $get, $set) => $set('document_preview', url('/storage//' . $state->getFilename()))),
+                        ->columnSpanFull(),
+                        // ->afterStateUpdated(fn($state, $get, $set) => $set('document_preview', url('/storage//' . $state->getFilename()))),
                     Section::make('Pré-visualização do Arquivo')
                         ->schema([
                             ViewField::make('document_preview')
