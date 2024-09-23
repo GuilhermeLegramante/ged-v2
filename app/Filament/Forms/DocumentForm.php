@@ -9,6 +9,7 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TagsInput;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\ViewField;
+use Illuminate\Support\Facades\Storage;
 
 class DocumentForm
 {
@@ -28,9 +29,25 @@ class DocumentForm
                         ->disk('public')  
                         ->preserveFilenames()  
                         ->directory('uploads-ged-v2')
+                        // ->afterStateUpdated(function ($state, $set, $get, $model) {
+                        //     if ($state) {
+                        //         $state->store('uploads-ged-v2', 's3');
+                        //     }
+                        // })
                         ->afterStateUpdated(function ($state, $set, $get, $model) {
                             if ($state) {
-                                $state->store('uploads-ged-v2', 's3');
+                                // Caminho do arquivo no disco local
+                                $localFilePath = 'uploads-ged-v2/' . $state->getFilename();
+                                
+                                // Copiar o arquivo para o S3
+                                $s3Path = 'uploads-ged-v2/' . $state->getFilename();
+                                if (Storage::disk('public')->exists($localFilePath)) {
+                                    // Copia para o S3
+                                    Storage::disk('s3')->put($s3Path, Storage::disk('public')->get($localFilePath));
+                                }
+                                
+                                // Atualiza a pré-visualização com o caminho no local
+                                $set('document_preview', Storage::disk('public')->url($localFilePath));
                             }
                         })
                         ->columnSpanFull()
