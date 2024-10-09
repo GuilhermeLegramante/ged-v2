@@ -44,7 +44,7 @@ class DocumentForm
                                     // Tenta copiar para o S3
                                     try {
                                         $s3Path = 'uploads-ged-v2/' . $state->getFilename();
-                                        Storage::disk('s3')->put($s3Path, Storage::disk('public')->get($localFilePath));
+                                        Storage::disk('s3')->put($s3Path, Storage::disk('public')->get($localFilePath), 'public');
 
                                         // Opcional: Log para verificar se salvou corretamente no S3
                                         Log::info("Arquivo {$s3Path} salvo com sucesso no S3.");
