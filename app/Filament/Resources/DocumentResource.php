@@ -63,7 +63,7 @@ class DocumentResource extends Resource
                     ->label('Número')
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: false),
-                TextColumn::make('description')
+                TextColumn::make('note')
                     ->label('Descrição')
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: false),
