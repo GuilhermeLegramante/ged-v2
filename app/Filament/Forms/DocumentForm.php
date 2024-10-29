@@ -27,6 +27,7 @@ class DocumentForm
                 ->schema([
                     TextInput::make('description')
                         ->label('Descrição')
+                        ->columnSpanFull()
                         ->maxLength(255),
                     FileUpload::make('attachment')
                         ->image()
