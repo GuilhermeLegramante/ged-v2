@@ -77,6 +77,7 @@ class DocumentForm
                         ->label('Tipo de Documento')
                         ->relationship('documentType', 'name')
                         ->createOptionForm(DocumentTypeForm::form()),
+
                     TextInput::make('number')
                         ->label('Número')
                         ->maxLength(255),
@@ -89,6 +90,11 @@ class DocumentForm
                         ->label('Início da Vigência'),
                     DatePicker::make('validity_end')
                         ->label('Fim da Vigência'),
+                    Select::make('folder_id')
+                        ->label('Pasta')
+                        ->columnSpanFull()
+                        ->relationship('folder', 'description')
+                        ->createOptionForm(FolderForm::form()),
                     Select::make('people')
                         ->label('Pessoas Relacionadas')
                         ->multiple()

@@ -86,6 +86,10 @@ class DocumentResource extends Resource
                     ->date()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: false),
+                TextColumn::make('folder.description')
+                    ->label('Pasta')
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: false),
                 Columns::createdAt(),
                 Columns::updatedAt(),
             ])

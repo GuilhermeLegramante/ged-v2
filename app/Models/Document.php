@@ -26,6 +26,7 @@ class Document extends Model
         'people',
 
         'document',
+        'folder_id',
     ];
 
     protected $casts = [
@@ -45,5 +46,10 @@ class Document extends Model
     public function getDocumentUrlAttribute()
     {
         return Storage::url($this->document);
+    }
+
+    public function folder(): BelongsTo
+    {
+        return $this->belongsTo(Folder::class);
     }
 }
