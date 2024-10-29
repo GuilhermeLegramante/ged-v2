@@ -66,7 +66,7 @@ class DocumentResource extends Resource
                 TextColumn::make('note')
                     ->label('Descrição')
                     ->searchable()
-                    ->formatStateUsing(fn (string $state) => implode(' ', array_slice(explode(' ', $state), 0, 5)))
+                    ->words(8)
                     ->toggleable(isToggledHiddenByDefault: false),
                 TextColumn::make('date')
                     ->label('Data do Documento')
