@@ -2,8 +2,11 @@
 
 namespace App\Filament\Forms;
 
+use App\Forms\Components\CameraCapture;
 use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\Field;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TagsInput;
@@ -22,6 +25,22 @@ class DocumentForm
                     fn(string $operation): string => $operation === 'create' || $operation === 'edit' ? 'Informe os campos solicitados' : ''
                 )
                 ->schema([
+                    TextInput::make('description')
+                        ->label('Descrição')
+                        ->maxLength(255),
+                    FileUpload::make('attachment')
+                        ->image()
+                        ->imageResizeMode('cover')
+                        ->imageCropAspectRatio('16:9')
+                        ->imageResizeTargetWidth('1920')
+                        ->imageResizeTargetHeight('1080')
+                        ->imagePreviewHeight('250')
+                        ->loadingIndicatorPosition('left')
+                        ->panelAspectRatio('2:1')
+                        ->panelLayout('integrated')
+                        ->removeUploadedFileButtonPosition('right')
+                        ->uploadButtonPosition('left')
+                        ->uploadProgressIndicatorPosition('left'),
                     FileUpload::make('path')
                         ->label('Arquivo')
                         ->previewable()
@@ -82,7 +101,6 @@ class DocumentForm
                     TextInput::make('filename')
                         ->label('Nome do Documento')
                         ->maxLength(255),
-
                     DatePicker::make('validity_start')
                         ->label('Início da Vigência'),
                     DatePicker::make('validity_end')
