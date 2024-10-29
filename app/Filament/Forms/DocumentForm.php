@@ -25,10 +25,6 @@ class DocumentForm
                     fn(string $operation): string => $operation === 'create' || $operation === 'edit' ? 'Informe os campos solicitados' : ''
                 )
                 ->schema([
-                    TextInput::make('description')
-                        ->label('Descrição')
-                        ->columnSpanFull()
-                        ->maxLength(255),
                     FileUpload::make('path')
                         ->label('Arquivo')
                         ->previewable()
