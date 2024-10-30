@@ -10,6 +10,7 @@ use App\Filament\Resources\DocumentResource\RelationManagers;
 use App\Filament\Tables\Columns;
 use App\Models\Document;
 use App\Tables\Columns\FileLink;
+use Filament\Actions\Action;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
@@ -121,6 +122,12 @@ class DocumentResource extends Resource
                             );
                     })
             ])
+            ->deferFilters()
+            ->filtersApplyAction(
+                fn(Action $action) => $action
+                    ->link()
+                    ->label('Aplicar Filtro(s)'),
+            )
             ->actions([
                 ActionGroup::make([
                     Tables\Actions\EditAction::make(),
