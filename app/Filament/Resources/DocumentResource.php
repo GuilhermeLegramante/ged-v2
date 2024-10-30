@@ -130,4 +130,6 @@ class DocumentResource extends Resource
     {
         return static::getModel()::count();
     }
+
+   
 }
