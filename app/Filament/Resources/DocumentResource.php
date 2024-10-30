@@ -25,6 +25,7 @@ use Filament\Tables\Actions\ActionGroup;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Enums\ActionsPosition;
 use Filament\Tables\Filters\Filter;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -96,11 +97,17 @@ class DocumentResource extends Resource
                 Columns::updatedAt(),
             ])
             ->filters([
+                SelectFilter::make('documentType')
+                    ->label('Tipo de Documento')
+                    ->searchable()
+                    ->relationship('documentType', 'name'),
                 Filter::make('created_at')
                     ->label('Data de Criação')
                     ->form([
-                        DatePicker::make('created_from'),
-                        DatePicker::make('created_until'),
+                        DatePicker::make('created_from')
+                            ->label('De'),
+                        DatePicker::make('created_until')
+                            ->label('Até'),
                     ])
                     ->query(function (Builder $query, array $data): Builder {
                         return $query
