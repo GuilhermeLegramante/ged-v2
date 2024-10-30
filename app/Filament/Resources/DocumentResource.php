@@ -10,7 +10,7 @@ use App\Filament\Resources\DocumentResource\RelationManagers;
 use App\Filament\Tables\Columns;
 use App\Models\Document;
 use App\Tables\Columns\FileLink;
-use Filament\Actions\Action;
+use Filament\Tables\Actions\Action;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
