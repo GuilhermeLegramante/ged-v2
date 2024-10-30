@@ -102,6 +102,11 @@ class DocumentResource extends Resource
                     ->label('Tipo de Documento')
                     ->searchable()
                     ->relationship('documentType', 'name'),
+                SelectFilter::make('people')
+                    ->label('Pessoas Relacionadas')
+                    ->multiple()
+                    ->searchable()
+                    ->relationship('people', 'name'),
                 Filter::make('created_at')
                     ->label('Data de Criação')
                     ->form([
