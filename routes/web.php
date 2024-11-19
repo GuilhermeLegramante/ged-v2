@@ -26,5 +26,6 @@ Route::get('/', function () {
 });
 
 Route::get('/teste-upload', function (){
-    Storage::disk('s3')->put('uploads-ged-v2/test.txt', 'Conteúdo de teste');
+    Storage::disk('s3')->put('uploads-ged-v2/123456.txt', 'Conteúdo de teste');
+    dd('OK');
 });

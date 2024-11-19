@@ -37,7 +37,7 @@ class CreateDocument extends CreateRecord
 
             $fileContent = Storage::disk('public')->get($data['path']);
 
-            Storage::disk('s3')->put("uploads-ged-v2/" . env('CLIENT_NAME') . '/' . $data['path'], $fileContent);
+            // Storage::disk('s3')->put("uploads-ged-v2/" . env('CLIENT_NAME') . '/' . $data['path'], $fileContent);
 
             $this->callHook('afterCreate');
         } catch (Halt $exception) {
