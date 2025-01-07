@@ -1,5 +1,7 @@
 <?php
 
+use App\Filament\Pages\CustomPage;
+use App\Filament\Pages\PublicDocumentsPage;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Livewire;
@@ -25,7 +27,11 @@ Route::get('/', function () {
     return redirect(route('filament.admin.pages.dashboard'));
 });
 
-Route::get('/teste-upload', function (){
+Route::get('/teste-upload', function () {
     Storage::disk('s3')->put('uploads-ged-v2/123456.txt', 'Conteúdo de teste');
     dd('OK');
 });
+
+
+Route::get('/documentos', PublicDocumentsPage::class)->name('public-documents');
+
