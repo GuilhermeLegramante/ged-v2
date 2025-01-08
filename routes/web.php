@@ -1,6 +1,7 @@
 <?php
 
 use App\Filament\Pages\CustomPage;
+use App\Filament\Pages\PublicDocumentDetailsPage;
 use App\Filament\Pages\PublicDocumentsPage;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
@@ -34,4 +35,6 @@ Route::get('/teste-upload', function () {
 
 
 Route::get('/documentos', PublicDocumentsPage::class)->name('public-documents');
+
+Route::get('/documentos/{id}', PublicDocumentDetailsPage::class)->name('public-document-details');
 

@@ -27,6 +27,8 @@ class PublicDocumentsPage extends SimplePage implements HasTable
 
     protected ?string $maxWidth = '7xl';
 
+    protected static ?string $title = 'Documentos Públicos';
+
     public static function table(Table $table): Table
     {
         return $table
@@ -42,8 +44,8 @@ class PublicDocumentsPage extends SimplePage implements HasTable
                     ->label('Número')
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: false),
-                TextColumn::make('note')
-                    ->label('Descrição')
+                TextColumn::make('name')
+                    ->label('Nome do Documento')
                     ->searchable()
                     ->words(8)
                     ->toggleable(isToggledHiddenByDefault: false),
@@ -60,16 +62,12 @@ class PublicDocumentsPage extends SimplePage implements HasTable
                     ->label('Início da Vigência')
                     ->date()
                     ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: false),
+                    ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('validity_end')
                     ->label('Fim da Vigência')
                     ->date()
                     ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: false),
-                TextColumn::make('folder.description')
-                    ->label('Pasta')
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: false),
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Columns::createdAt(),
                 Columns::updatedAt(),
             ])
@@ -109,7 +107,12 @@ class PublicDocumentsPage extends SimplePage implements HasTable
                     ->link()
                     ->label('Aplicar Filtro(s)'),
             )
-            ->actions([])
+            ->actions([
+                Action::make('view')
+                    ->label('Ver Detalhes')
+                    ->url(fn (Document $record) => route('public-document-details', $record->id))
+                    ->color('primary'),
+            ])
             ->bulkActions([]);
     }
 }

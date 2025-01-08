@@ -1,4 +1,3 @@
-<div>
-    <h1 class="text-xl font-bold mb-4">Documentos</h1>
+<x-filament-panels::page.simple>
     {{ $this->table }}
-</div>
+</x-filament-panels::page.simple>
