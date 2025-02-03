@@ -35,6 +35,10 @@ Route::get('/teste-upload', function () {
 });
 
 Route::get('/log-tina/{start}/{end}', function ($start, $end) {
+    // Ajustando o formato para garantir que o intervalo abranja o dia todo
+    $start = Carbon\Carbon::parse($start)->startOfDay(); // Começo do dia
+    $end = Carbon\Carbon::parse($end)->endOfDay(); // Fim do dia
+
     $total = DB::table('activity_log')
             ->where('description', 'like', '%Document Updated by vallentina%')
             ->whereBetween('created_at', [$start, $end])
@@ -42,6 +46,7 @@ Route::get('/log-tina/{start}/{end}', function ($start, $end) {
 
     dd($total);
 });
+
 
 
 
