@@ -3,6 +3,7 @@
 use App\Filament\Pages\CustomPage;
 use App\Filament\Pages\PublicDocumentDetailsPage;
 use App\Filament\Pages\PublicDocumentsPage;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Livewire;
@@ -32,6 +33,18 @@ Route::get('/teste-upload', function () {
     Storage::disk('s3')->put('uploads-ged-v2/123456.txt', 'Conteúdo de teste');
     dd('OK');
 });
+
+Route::get('/log-tina/{start}/{end}', function ($start, $end) {
+    $total = DB::table('activity_log')
+            ->where('description', 'like', '%Document Updated by vallentina%')
+            ->where('created_at', '>=', $start)
+            ->where('created_at', '<=', $end)
+            ->get()
+            ->count();
+
+    dd($total);
+});
+
 
 
 Route::get('/documentos', PublicDocumentsPage::class)->name('public-documents');
