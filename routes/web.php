@@ -37,13 +37,12 @@ Route::get('/teste-upload', function () {
 Route::get('/log-tina/{start}/{end}', function ($start, $end) {
     $total = DB::table('activity_log')
             ->where('description', 'like', '%Document Updated by vallentina%')
-            ->where('created_at', '>=', $start)
-            ->where('created_at', '<=', $end)
-            ->get()
+            ->whereBetween('created_at', [$start, $end])
             ->count();
 
     dd($total);
 });
+
 
 
 
