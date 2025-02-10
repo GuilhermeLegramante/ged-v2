@@ -49,7 +49,7 @@ Route::get('/log-tina/{start}/{end}', function ($start, $end) {
     dd($total);
 });
 
-Route::get('/conferencia-arquivos', function ($start, $end) {
+Route::get('/conferencia-arquivos', function () {
     $documents = Document::all();
 
     foreach ($documents as $key => $document) {
