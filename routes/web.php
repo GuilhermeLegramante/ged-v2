@@ -50,7 +50,10 @@ Route::get('/log-tina/{start}/{end}', function ($start, $end) {
 });
 
 Route::get('/conferencia-arquivos', function () {
-    $documents = Document::take(1000)->get(); // Obtém os primeiros 1000 documentos
+
+    set_time_limit(0);
+
+    $documents = Document::all(); // Obtém os primeiros 1000 documentos
 
     foreach ($documents as $key => $document) {
         $filePath = 'https://ged-saofranciscodeassis.hardsoftsistemas.com/storage/' . $document->path;
