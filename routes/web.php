@@ -53,7 +53,7 @@ Route::get('/conferencia-arquivos', function () {
 
     set_time_limit(0);
 
-    $documents = Document::where('id', '>', 3353)->get(); // Obtém os primeiros 1000 documentos
+    $documents = Document::where('id', '<=', 1000)->get(); // Obtém os primeiros 1000 documentos
 
     foreach ($documents as $key => $document) {
         $filePath = 'https://ged-saofranciscodeassis.hardsoftsistemas.com/storage/' . $document->path;
@@ -66,14 +66,14 @@ Route::get('/conferencia-arquivos', function () {
             // Se o código de resposta HTTP for 404, o arquivo não existe
             if (strpos($headers[0], '404') !== false) {
                 // Log do arquivo não encontrado, incluindo a data de criação do documento
-                Log::info("Documento ID: {$document->id} não encontrado. Criado em: {$document->created_at}. Caminho: {$filePath}");
+                Log::info("{$document->id} - {$document->created_at} - {$filePath}");
             }
         } else {
-            Log::warning("Arquivo não encontrado: " . $filePath);
+            Log::info("{$document->id} - {$document->created_at} - {$filePath}");
         }
     }
 
-    dd("FIM");
+    dd("1000");
 });
 
 
