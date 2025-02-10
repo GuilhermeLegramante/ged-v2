@@ -53,7 +53,7 @@ Route::get('/conferencia-arquivos', function () {
 
     set_time_limit(0);
 
-    $documents = Document::where('id', '>', 2000)->where('id', '<=', 3000)->get(); 
+    $documents = Document::where('id', '>', 3000)->where('id', '<=', 4000)->get(); 
 
     foreach ($documents as $key => $document) {
         $filePath = 'https://ged-saofranciscodeassis.hardsoftsistemas.com/storage/' . $document->path;
@@ -73,7 +73,7 @@ Route::get('/conferencia-arquivos', function () {
         }
     }
 
-    dd("3000");
+    dd("4000");
 });
 
 
