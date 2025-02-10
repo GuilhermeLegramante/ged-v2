@@ -3,7 +3,9 @@
 use App\Filament\Pages\CustomPage;
 use App\Filament\Pages\PublicDocumentDetailsPage;
 use App\Filament\Pages\PublicDocumentsPage;
+use App\Models\Document;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Livewire;
@@ -40,12 +42,35 @@ Route::get('/log-tina/{start}/{end}', function ($start, $end) {
     $end = Carbon\Carbon::parse($end)->endOfDay(); // Fim do dia
 
     $total = DB::table('activity_log')
-            ->where('description', 'like', '%Document Updated by vallentina%')
-            ->whereBetween('created_at', [$start, $end])
-            ->count();
+        ->where('description', 'like', '%Document Updated by vallentina%')
+        ->whereBetween('created_at', [$start, $end])
+        ->count();
 
     dd($total);
 });
+
+Route::get('/conferencia-arquivos', function ($start, $end) {
+    $documents = Document::all();
+
+    foreach ($documents as $key => $document) {
+        $filePath = $document->path;
+
+        // Verifica se o arquivo é um PDF e o link é acessível
+        if (substr($filePath, -4) === '.pdf') {
+            // Verifica a existência do arquivo
+            $headers = get_headers($filePath);
+
+            // Se o código de resposta HTTP for 404, o arquivo não existe
+            if (strpos($headers[0], '404') !== false) {
+                // Log do arquivo não encontrado
+                Log::warning("Arquivo não encontrado: " . $filePath);
+            }
+        } else {
+            Log::warning("Arquivo não encontrado: " . $filePath);
+        }
+    }
+});
+
 
 
 
@@ -54,4 +79,3 @@ Route::get('/log-tina/{start}/{end}', function ($start, $end) {
 Route::get('/documentos', PublicDocumentsPage::class)->name('public-documents');
 
 Route::get('/documentos/{id}', PublicDocumentDetailsPage::class)->name('public-document-details');
-
