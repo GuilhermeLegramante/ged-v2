@@ -3,6 +3,7 @@
 use App\Filament\Pages\CustomPage;
 use App\Filament\Pages\PublicDocumentDetailsPage;
 use App\Filament\Pages\PublicDocumentsPage;
+use App\Http\Controllers\DocumentController;
 use App\Models\Document;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -75,6 +76,9 @@ Route::get('/conferencia-arquivos', function () {
 
     dd(">6000");
 });
+
+Route::get('/processar-arquivo', [DocumentController::class, 'processarArquivo']);
+
 
 
 
