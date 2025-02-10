@@ -55,6 +55,8 @@ Route::get('/conferencia-arquivos', function () {
     foreach ($documents as $key => $document) {
         $filePath = $document->path;
 
+        dd($filePath);
+
         // Verifica se o arquivo é um PDF e o link é acessível
         if (substr($filePath, -4) === '.pdf') {
             // Verifica a existência do arquivo
