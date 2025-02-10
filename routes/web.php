@@ -53,9 +53,7 @@ Route::get('/conferencia-arquivos', function () {
     $documents = Document::all();
 
     foreach ($documents as $key => $document) {
-        $filePath = $document->path;
-
-        dd($filePath);
+        $filePath = 'https://ged-saofranciscodeassis.hardsoftsistemas.com/storage/' . $document->path;
 
         // Verifica se o arquivo é um PDF e o link é acessível
         if (substr($filePath, -4) === '.pdf') {
