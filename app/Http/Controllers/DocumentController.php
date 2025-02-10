@@ -12,26 +12,32 @@ class DocumentController extends Controller
     public function processarArquivo()
     {
         $path = storage_path('app/log_documentos_sem_arquivo.md'); // Caminho para o arquivo .md
-        
+
         // Verifique se o arquivo existe
         if (!File::exists($path)) {
             return response()->json(['error' => 'Arquivo não encontrado.'], 404);
         }
-
+        
         // Ler o conteúdo do arquivo .md
         $content = File::get($path);
         
         // Quebrar o conteúdo em linhas
         $lines = explode("\n", $content);
         
-        // Caminho para o arquivo de log
-        $logFile = storage_path('logs/documentos_processados.log');
-
-        // Se o arquivo de log não existir, cria o arquivo
-        if (!File::exists($logFile)) {
-            File::put($logFile, "Log de Processamento de Documentos\n\n");
+        // Caminho para o arquivo CSV
+        $csvFile = storage_path('app/documentos_processados.csv');
+        
+        // Se o arquivo CSV não existir, cria o arquivo com cabeçalho
+        if (!File::exists($csvFile)) {
+            $header = ['ID', 'Filename']; // Cabeçalho do CSV
+            $handle = fopen($csvFile, 'w');
+            fputcsv($handle, $header); // Escreve o cabeçalho no CSV
+            fclose($handle);
         }
-
+        
+        // Abre o arquivo CSV para adicionar os dados
+        $handle = fopen($csvFile, 'a');
+        
         // Itera sobre cada linha
         foreach ($lines as $line) {
             // Aqui estamos assumindo que a linha é do tipo:
@@ -41,24 +47,22 @@ class DocumentController extends Controller
                 // Pega o número após "local.INFO:"
                 $parts = explode('local.INFO:', $line);
                 $number = trim(explode(' -', $parts[1])[0]);
-
+        
                 // Buscar o documento correspondente ao número
                 $documento = Document::where('id', $number)->first();
-
+        
                 if ($documento) {
-                    // Grava no arquivo de log as informações do documento
-                    $logData = sprintf(
-                        "[%s] Filename: %s\n",
-                        now()->toDateTimeString(),
-                        $documento->filename
-                    );
-
-                    // Adiciona a entrada no arquivo de log
-                    File::append($logFile, $logData);
+                    // Grava a entrada no arquivo CSV
+                    $csvData = [$documento->id, $documento->filename];
+                    fputcsv($handle, $csvData);
                 }
             }
         }
-
-        return response()->json(['success' => 'Processamento concluído e log gerado.']);
+        
+        // Fecha o arquivo CSV após adicionar os dados
+        fclose($handle);
+        
+        return response()->json(['success' => 'Processamento concluído e CSV gerado.']);
+        
     }
 }
