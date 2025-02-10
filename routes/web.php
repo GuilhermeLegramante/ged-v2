@@ -53,7 +53,7 @@ Route::get('/conferencia-arquivos', function () {
 
     set_time_limit(0);
 
-    $documents = Document::where('id', '>', 2006)->get(); // Obtém os primeiros 1000 documentos
+    $documents = Document::where('id', '>', 3353)->get(); // Obtém os primeiros 1000 documentos
 
     foreach ($documents as $key => $document) {
         $filePath = 'https://ged-saofranciscodeassis.hardsoftsistemas.com/storage/' . $document->path;
