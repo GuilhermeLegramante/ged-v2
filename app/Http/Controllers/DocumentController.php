@@ -11,7 +11,7 @@ class DocumentController extends Controller
 {
     public function processarArquivo()
     {
-        $path = storage_path('app/seu-arquivo.md'); // Caminho para o arquivo .md
+        $path = storage_path('app/log_documentos_sem_arquivo.md'); // Caminho para o arquivo .md
         
         // Verifique se o arquivo existe
         if (!File::exists($path)) {
