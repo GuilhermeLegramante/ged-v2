@@ -69,6 +69,8 @@ Route::get('/conferencia-arquivos', function ($start, $end) {
             Log::warning("Arquivo não encontrado: " . $filePath);
         }
     }
+
+    dd("FIM");
 });
 
 
