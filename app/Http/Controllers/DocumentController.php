@@ -48,7 +48,8 @@ class DocumentController extends Controller
                 if ($documento) {
                     // Grava no arquivo de log as informações do documento
                     $logData = sprintf(
-                        "\n",
+                        "[%s] Filename: %s\n",
+                        now()->toDateTimeString(),
                         $documento->filename
                     );
 
