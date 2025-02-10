@@ -73,7 +73,7 @@ Route::get('/conferencia-arquivos', function () {
         }
     }
 
-    dd("6000");
+    dd(">6000");
 });
 
 
