@@ -32,7 +32,7 @@ class DocumentForm
                         ->label('Arquivo')
                         ->previewable()
                         ->downloadable()
-                        ->acceptedFileTypes(['image/*', 'application/pdf'])
+                        // ->acceptedFileTypes(['image/*', 'application/pdf'])
                         ->columnSpanFull()
                         ->afterStateUpdated(fn($state, $get, $set) => $set('document_preview', url('/storage//' . $state->getFilename()))),
                     Section::make('Pré-visualização do Arquivo')
