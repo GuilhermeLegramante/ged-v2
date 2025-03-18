@@ -54,7 +54,7 @@ Route::get('/conferencia-arquivos', function () {
 
     set_time_limit(0);
 
-    $documents = Document::where('id', '<', 1000)->get(); 
+    $documents = Document::where('id', '>', 1001)->get(); 
 
     foreach ($documents as $key => $document) {
         $filePath = 'https://ged-saofranciscodeassis.hardsoftsistemas.com/storage/' . $document->path;
@@ -74,7 +74,7 @@ Route::get('/conferencia-arquivos', function () {
         }
     }
 
-    dd("<1000");
+    dd(">1001");
 });
 
 Route::get('/processar-arquivo', [DocumentController::class, 'processarArquivo']);
