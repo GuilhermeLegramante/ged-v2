@@ -54,7 +54,7 @@ Route::get('/conferencia-arquivos', function () {
 
     set_time_limit(0);
 
-    $documents = Document::where('id', '<',2000)->get(); 
+    $documents = Document::where('id', '>', 2000)->get();
 
     foreach ($documents as $key => $document) {
         $filePath = 'https://ged-saofranciscodeassis.hardsoftsistemas.com/storage/' . $document->path;
@@ -63,7 +63,7 @@ Route::get('/conferencia-arquivos', function () {
         if (substr($filePath, -4) === '.pdf') {
             // Verifica a existência do arquivo
             $headers = get_headers($filePath);
-    
+
             // Se o código de resposta HTTP for 404, o arquivo não existe
             if (strpos($headers[0], '404') !== false) {
                 // Log do arquivo não encontrado, incluindo a data de criação do documento
