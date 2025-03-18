@@ -17,16 +17,16 @@ class DocumentController extends Controller
         if (!File::exists($path)) {
             return response()->json(['error' => 'Arquivo não encontrado.'], 404);
         }
-        
+
         // Ler o conteúdo do arquivo .md
         $content = File::get($path);
-        
+
         // Quebrar o conteúdo em linhas
         $lines = explode("\n", $content);
-        
+
         // Caminho para o arquivo CSV
         $csvFile = storage_path('app/documentos_processados.csv');
-        
+
         // Se o arquivo CSV não existir, cria o arquivo com cabeçalho
         if (!File::exists($csvFile)) {
             $header = ['ID', 'Filename']; // Cabeçalho do CSV
@@ -34,10 +34,10 @@ class DocumentController extends Controller
             fputcsv($handle, $header); // Escreve o cabeçalho no CSV
             fclose($handle);
         }
-        
+
         // Abre o arquivo CSV para adicionar os dados
         $handle = fopen($csvFile, 'a');
-        
+
         // Itera sobre cada linha
         foreach ($lines as $line) {
             // Aqui estamos assumindo que a linha é do tipo:
@@ -47,10 +47,12 @@ class DocumentController extends Controller
                 // Pega o número após "local.INFO:"
                 $parts = explode('local.INFO:', $line);
                 $number = trim(explode(' -', $parts[1])[0]);
-        
+
+                Document::find($number)->delete();
+
                 // Buscar o documento correspondente ao número
                 $documento = Document::where('id', $number)->first();
-        
+
                 if ($documento) {
                     // Grava a entrada no arquivo CSV
                     $csvData = [$documento->id, $documento->filename];
@@ -58,11 +60,10 @@ class DocumentController extends Controller
                 }
             }
         }
-        
+
         // Fecha o arquivo CSV após adicionar os dados
         fclose($handle);
-        
+
         return response()->json(['success' => 'Processamento concluído e CSV gerado.']);
-        
     }
 }
