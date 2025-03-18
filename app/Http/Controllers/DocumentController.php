@@ -48,7 +48,7 @@ class DocumentController extends Controller
                 $parts = explode('local.INFO:', $line);
                 $number = trim(explode(' -', $parts[1])[0]);
 
-                Document::find($number)->delete();
+                // Document::find($number)->delete();
 
                 // Buscar o documento correspondente ao número
                 $documento = Document::where('id', $number)->first();
