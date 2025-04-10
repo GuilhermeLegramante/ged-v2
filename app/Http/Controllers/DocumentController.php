@@ -66,4 +66,5 @@ class DocumentController extends Controller
 
         return response()->json(['success' => 'Processamento concluído e CSV gerado.']);
     }
+
 }

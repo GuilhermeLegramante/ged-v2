@@ -71,6 +71,11 @@ class DocumentResource extends Resource
                     ->searchable()
                     ->words(8)
                     ->toggleable(isToggledHiddenByDefault: false),
+                TextColumn::make('filename')
+                    ->label('Nome')
+                    ->sortable()
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: false),
                 TextColumn::make('date')
                     ->label('Data do Documento')
                     ->date()
