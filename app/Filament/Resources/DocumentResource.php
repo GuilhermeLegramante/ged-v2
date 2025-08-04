@@ -146,11 +146,11 @@ class DocumentResource extends Resource
                     ->link()
                     ->label('Aplicar Filtro(s)'),
             )
-            ->groups([
-                Group::make('folder.description')
-                    ->label('Pasta')
-                    ->collapsible(),
-            ])
+            // ->groups([
+            //     Group::make('folder.description')
+            //         ->label('Pasta')
+            //         ->collapsible(),
+            // ])
             ->actions([
                 ActionGroup::make([
                     // Tables\Actions\ViewAction::make(),
