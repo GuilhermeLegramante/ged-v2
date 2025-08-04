@@ -27,6 +27,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Enums\ActionsPosition;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\SelectFilter;
+use Filament\Tables\Grouping\Group;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -55,6 +56,8 @@ class DocumentResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->persistFiltersInSession()
+            ->persistSortInSession()
             ->defaultSort('id', 'desc')
             ->columns([
                 TextColumn::make('documentType.name')
@@ -112,6 +115,11 @@ class DocumentResource extends Resource
                     ->multiple()
                     ->searchable()
                     ->relationship('people', 'name'),
+                SelectFilter::make('folder')
+                    ->label('Pasta(s)')
+                    ->multiple()
+                    ->searchable()
+                    ->relationship('folder', 'description'),
                 Filter::make('created_at')
                     ->label('Data de Criação')
                     ->form([
@@ -138,6 +146,11 @@ class DocumentResource extends Resource
                     ->link()
                     ->label('Aplicar Filtro(s)'),
             )
+            ->groups([
+                Group::make('folder.description')
+                    ->label('Pasta')
+                    ->collapsible(),
+            ])
             ->actions([
                 ActionGroup::make([
                     // Tables\Actions\ViewAction::make(),
