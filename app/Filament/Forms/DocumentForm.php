@@ -33,8 +33,26 @@ class DocumentForm
                         ->previewable()
                         ->downloadable()
                         ->columnSpanFull()
-                        ->afterStateUpdated(fn($state, $get, $set) => $set('document_preview', url('/storage//' . $state->getFilename()))),
+                        ->afterStateUpdated(function ($state, $get, $set) {
+                            if ($state) {
+                                dd($state->getFilename());
 
+                                $set('document_preview', url('/storage//' . $state->getFilename()));
+                            }
+                        }),
+                    FileUpload::make('path')
+                        ->label('Arquivo')
+                        ->previewable()
+                        ->downloadable()
+                        ->columnSpanFull()
+                        ->afterStateUpdated(function ($state, $get, $set) {
+                            if ($state) {
+                                // gera URL pública (disco configurado no filesystem)
+                                $url = Storage::disk('public')->url($state);
+                                dd($url);
+                                $set('document_preview', $url);
+                            }
+                        }),
                     Section::make('Pré-visualização do Arquivo')
                         ->schema([
                             ViewField::make('document_preview')
