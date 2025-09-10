@@ -38,19 +38,6 @@ class DocumentForm
                                 $set('document_preview', url('/storage//public//' . $state->getFilename()));
                             }
                         }),
-                    FileUpload::make('path')
-                        ->label('Arquivo')
-                        ->previewable()
-                        ->downloadable()
-                        ->columnSpanFull()
-                        ->afterStateUpdated(function ($state, $get, $set) {
-                            if ($state) {
-                                // gera URL pública (disco configurado no filesystem)
-                                $url = Storage::disk('public')->url($state);
-                                dd($url);
-                                $set('document_preview', $url);
-                            }
-                        }),
                     Section::make('Pré-visualização do Arquivo')
                         ->schema([
                             ViewField::make('document_preview')
