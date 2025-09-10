@@ -35,9 +35,9 @@ class DocumentForm
                         ->columnSpanFull()
                         ->afterStateUpdated(function ($state, $get, $set) {
                             if ($state) {
-                                dd($state->getFilename());
+                                dd(url('/storage//public//' . $state->getFilename()));
 
-                                $set('document_preview', url('/storage//' . $state->getFilename()));
+                                $set('document_preview', url('/storage//public//' . $state->getFilename()));
                             }
                         }),
                     FileUpload::make('path')
