@@ -28,25 +28,13 @@ class DocumentForm
                     fn(string $operation): string => $operation === 'create' || $operation === 'edit' ? 'Informe os campos solicitados' : ''
                 )
                 ->schema([
-                    // FileUpload::make('path')
-                    //     ->label('Arquivo')
-                    //     ->previewable()
-                    //     ->downloadable()
-                    //     ->columnSpanFull()
-                    //     ->afterStateUpdated(fn($state, $get, $set) => $set('document_preview', url('/storage//' . $state->getFilename()))),
                     FileUpload::make('path')
                         ->label('Arquivo')
                         ->previewable()
                         ->downloadable()
                         ->columnSpanFull()
-                        ->afterStateUpdated(function ($state, $get, $set) {
-                            if ($state) {
-                                // gera URL pública (disco configurado no filesystem)
-                                $url = Storage::disk('public')->url($state);
-                                dd($url);
-                                $set('document_preview', $url);
-                            }
-                        }),
+                        ->afterStateUpdated(fn($state, $get, $set) => $set('document_preview', url('/storage//' . $state->getFilename()))),
+
                     Section::make('Pré-visualização do Arquivo')
                         ->schema([
                             ViewField::make('document_preview')
