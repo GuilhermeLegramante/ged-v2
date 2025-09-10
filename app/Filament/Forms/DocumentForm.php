@@ -43,6 +43,7 @@ class DocumentForm
                             if ($state) {
                                 // gera URL pública (disco configurado no filesystem)
                                 $url = Storage::disk('public')->url($state);
+                                dd($url);
                                 $set('document_preview', $url);
                             }
                         }),
