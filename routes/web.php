@@ -33,8 +33,8 @@ Route::get('/', function () {
 });
 
 Route::get('/teste-upload', function () {
-    Storage::disk('s3')->put('uploads-ged-v2/123456.txt', 'Conteúdo de teste');
-    dd('OK');
+    $teste = Storage::disk('s3')->put('uploads-ged-v2/teste.txt', 'Conteúdo de teste');
+    dd($teste); 
 });
 
 Route::get('/log-tina/{start}/{end}', function ($start, $end) {
