@@ -35,8 +35,6 @@ class DocumentForm
                         ->columnSpanFull()
                         ->afterStateUpdated(function ($state, $get, $set) {
                             if ($state) {
-                                dd(url('/storage//public//' . $state->getFilename()));
-
                                 $set('document_preview', url('/storage//public//' . $state->getFilename()));
                             }
                         }),
